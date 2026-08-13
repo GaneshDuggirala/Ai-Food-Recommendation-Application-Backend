@@ -11,9 +11,10 @@ database = None
 food_items_collection = None
 counters_collection = None
 users_collection = None
+orders_collection = None
 
 def connect_db():
-    global client, database, food_items_collection, counters_collection, users_collection
+    global client, database, food_items_collection, counters_collection, users_collection, orders_collection
     print("Connecting to MongoDB...")
     
     # Get URL from .env
@@ -28,6 +29,7 @@ def connect_db():
     food_items_collection = database["food_items"]
     counters_collection = database["counters"]
     users_collection = database["users"]
+    orders_collection = database["orders"]
     
     print("Successfully connected to MongoDB!")
 

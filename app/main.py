@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from app.routes.status_routes import router as status_router
 from app.routes.food_item_routes import router as food_item_router
 from app.routes.auth_routes import router as auth_router
+from app.routes.order_routes import router as order_router
 from app.database import connect_db, close_db
 
 load_dotenv()
@@ -37,3 +38,4 @@ def shutdown_event():
 app.include_router(status_router, prefix="/api")
 app.include_router(food_item_router, prefix="/api/items")
 app.include_router(auth_router, prefix="/api")
+app.include_router(order_router, prefix="/api/orders")
