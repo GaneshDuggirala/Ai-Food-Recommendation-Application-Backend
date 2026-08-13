@@ -22,3 +22,32 @@ def update_food_item(item_id: int, item: FoodItemCreate):
 def delete_food_item(item_id: int):
     # Just need the ID from the URL to delete it!
     return food_item_service.delete_food_item(item_id)
+
+@router.get("/search", status_code=status.HTTP_200_OK)
+def search_food_items(q: str):
+    from app.services import ai_service
+    
+    print(f"\n==============================================")
+    print(f"User\n │\n │ \"{q}\"\n ▼\nAI\n │")
+    all_items = food_item_service.get_all_food_items()
+    
+    if not q or not q.strip():
+        return all_items
+        
+    categories = list(set([item.get("category") for item in all_items if item.get("category")]))
+    tags_lists = [item.get("dietary_tags", []) for item in all_items]
+    tags = list(set([tag for sublist in tags_lists for tag in sublist]))
+        
+    filters = ai_service.extract_filters_with_ai(q, categories, tags)
+    
+    # Query database
+    print(f" │\n ▼\nDatabase\n │")
+    matched_items = food_item_service.search_items_by_filter(filters)
+    
+    if matched_items:
+        print(f" ├── Matching items → returning {len(matched_items)} items")
+    else:
+        print(" └── No matching items → \"Not available\"")
+    print(f"==============================================\n")
+        
+    return matched_items
