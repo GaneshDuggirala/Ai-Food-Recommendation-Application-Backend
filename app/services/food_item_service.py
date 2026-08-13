@@ -87,8 +87,6 @@ def search_items_by_filter(filters: dict):
         if keyword_conditions:
             query["$or"] = keyword_conditions
             
-    print(f"--- Executing MongoDB Query: {query} ---")
-    
     all_items_list = []
     for item in db.food_items_collection.find(query):
         item.pop("_id", None)

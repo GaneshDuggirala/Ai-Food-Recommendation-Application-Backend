@@ -15,12 +15,7 @@ if api_key:
     )
 
 def extract_filters_with_ai(query: str, available_categories: list, available_tags: list) -> dict:
-    """
-    Takes a natural language query and extracts MongoDB filter parameters.
-    """
-    print(f"--- AI SEARCH STEP 1: Received user query ---")
-    print(f"Query: '{query}'")
-    
+
     if not client:
         print("GROQ_API_KEY is not set. Cannot use AI search.")
         return {}
@@ -70,8 +65,6 @@ Do not include any markdown formatting, backticks, explanations, or other text. 
                 response_text = '\n'.join(lines[1:-1]).strip()
             
         filters = json.loads(response_text)
-        
-        print(f"--- AI SEARCH STEP 2: AI Converts query -> filters ---")
         print(json.dumps(filters, indent=2))
         
         return filters
