@@ -42,8 +42,3 @@
 6. Run the backend server:
    `uvicorn app.main:app --reload`
    (The backend will be available at http://127.0.0.1:8000)
-
-## Assumptions Made
-- Single Item Orders: The app assumes each item in the cart is saved as its own order record. If a user buys 3 different items, it creates 3 separate orders.
-- Local Database: MongoDB is expected to run locally on your machine without a password for development testing.
-- Admin Users: The "admin" role is given to a user directly in the database.
